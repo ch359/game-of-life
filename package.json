@@ -9,6 +9,11 @@
   "author": "Colin Hulme",
   "license": "GPL-2.0",
   "devDependencies": {
-    "jasmine": "^3.4.0"
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jasmine": "^2.10.1",
+    "jasmine": "^3.4.0",
+    "jasmine-node": "^1.16.2"
   }
 }
