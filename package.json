@@ -1,0 +1,14 @@
+{
+  "name": "game-of-life",
+  "version": "0.1.1",
+  "description": "Game of Life implementation in javascript and html5 canvas",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "author": "Colin Hulme",
+  "license": "GPL-2.0",
+  "devDependencies": {
+    "jasmine": "^3.4.0"
+  }
+}
