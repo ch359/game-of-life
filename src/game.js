@@ -10,7 +10,7 @@ class Game {
     let allDead = true;
     for (let i = 0; i < this.board.length; i += 1) {
       for (let j = 0; j < this.board[i].length; j += 1) {
-        if (this.board[i][j].alive) {
+        if (this.board[i][j].isAlive() === true) {
           allDead = false;
           break;
         }

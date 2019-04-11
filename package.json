@@ -14,12 +14,7 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jasmine": "^2.10.1",
     "jasmine": "^3.4.0",
-    "jasmine-node": "^1.16.2",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-jasmine": "^2.0.1"
+    "jasmine-node": "^1.16.2"
   },
-  "dependencies": {
-    "karma": "^4.0.1",
-    "karma-firefox-launcher": "^1.1.0"
-  }
+  "dependencies": {}
 }

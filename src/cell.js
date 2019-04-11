@@ -14,6 +14,10 @@ class Cell {
   toggleAlive() {
     this.alive = !this.alive;
   }
+
+  isAlive() {
+    return this.alive;
+  }
 }
 
 module.exports = Cell;
