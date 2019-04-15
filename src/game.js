@@ -6,6 +6,35 @@ class Game {
     }
   }
 
+  shouldReproduce(x, y) {
+    const neighbours = this.getNeighbours(x, y);
+    let alive = 0;
+    for (let i = 0; i < neighbours.length; i += 1) {
+      if (neighbours[i].isAlive() === true) {
+        alive += 1;
+      }
+    }
+    return alive === 3;
+  }
+
+  getCell(x, y) {
+    return this.board[x][y];
+  }
+
+  getNeighbours(x, y) {
+    const neighbours = [];
+    const xValues = [x - 1, x, x + 1];
+    const yValues = [y - 1, y, y + 1];
+    for (let i = 0; i < xValues.length; i += 1) {
+      for (let j = 0; j < yValues.length; j += 1) {
+        if (!(xValues[i] === x && yValues[j] === y)) {
+          neighbours.push(this.getCell(xValues[i], yValues[j]));
+        }
+      }
+    }
+    return neighbours;
+  }
+
   allDead() {
     let allDead = true;
     for (let i = 0; i < this.board.length; i += 1) {
