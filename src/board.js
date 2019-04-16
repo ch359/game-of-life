@@ -1,9 +1,9 @@
+const Cell = require('../src/cell');
+
 class Board {
   constructor(size) {
-    this.board = new Array(size);
-    for (let i = 0; i < this.board.length; i += 1) {
-      this.board[i] = new Array(size);
-    }
+    this.constructBoard(size);
+    this.populateBoard();
   }
 
   shouldReproduce(x, y) {
@@ -46,6 +46,21 @@ class Board {
       }
     }
     return allDead;
+  }
+
+  constructBoard(size) {
+    this.board = new Array(size);
+    for (let i = 0; i < this.board.length; i += 1) {
+      this.board[i] = new Array(size);
+    }
+  }
+
+  populateBoard() {
+    for (let i = 0; i < this.board.length; i += 1) {
+      for (let j = 0; j < this.board.length; j += 1) {
+        this.board[i][j] = new Cell();
+      }
+    }
   }
 }
 
