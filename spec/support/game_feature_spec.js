@@ -1,15 +1,15 @@
-const Game = require('../../src/game');
+const Board = require('../../src/board');
 const Cell = require('../../src/cell');
 
 
-describe('Game', () => {
+describe('Board', () => {
   let game;
   let cell;
   let liveCell;
   let subjectCell;
 
   beforeEach(() => {
-    game = new Game(5);
+    game = new Board(5);
     cell = new Cell();
     liveCell = new Cell();
     liveCell.alive = true;
