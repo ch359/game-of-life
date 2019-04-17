@@ -6,26 +6,18 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script type="text/javascript" src="src/board.js"></script>
-    <script>
-      function draw() {
-        var canvas = document.getElementById('gameCanvas');
-        if (canvas.getContext) {
-          var ctx = canvas.getContext('2d');
-
-          ctx.fillStyle = 'rgb(200, 0, 0)';
-          ctx.fillRect(10, 10, 50, 50);
-
-          ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
-          ctx.fillRect(30, 30, 50, 50);
-        }
-      }
-    </script>
-
 </head>
-<body onload="draw()">
-    <canvas id="gameCanvas" width="150" height="150">
+<body>
+    <canvas id="gameCanvas">
         HTML5 Canvas rendering of Board of Life appears here in supported browsers.
     </canvas>
+    <script type="text/javascript" src="src/game.js"></script>
 </body>
+<style>
+    #gameCanvas
+    {
+        border: 1px solid black;
+        background-size: 100%;
+    }
+</style>
 </html>
