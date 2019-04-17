@@ -22,14 +22,6 @@ describe('Board', () => {
       expect(board.board[0].length).toBe(5);
     });
 
-    it('populates the board with cells', () => {
-      for (let i = 0; i < board.board.length; i += 1) {
-        for (let j = 0; j < board.board.length; j += 1) {
-          expect(board.board[i][j]).toEqual(cell);
-        }
-      }
-    });
-
     it('makes cells reproduce if surrounded by exactly 3 live neighbours', () => {
       board.board = [[cell, liveCell, cell], [liveCell, subjectCell, cell], [cell, cell, liveCell]];
       expect(board.shouldReproduce(1, 1)).toBe(true);

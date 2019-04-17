@@ -33,8 +33,8 @@ class Board {
     // console.log('X and y are: ', x, y, 'respectively');
     const neighbours = [];
     // console.log('Line 31 neighbours is: ', neighbours);
-    const xValues = this.xValues();
-    const yValues = this.yValues();
+    const xValues = this.xValues(x);
+    const yValues = this.yValues(y);
     // console.log('switch x is: ', x);
     // console.log('x and y values are', xValues, yValues, 'respectively');
     for (let i = 0; i < xValues.length; i += 1) {
@@ -55,6 +55,8 @@ class Board {
   }
 
   xValues(x) {
+    // console.log('xValues function ------------------')
+    // console.log('x value is ', x);
     let xValues;
     if (x < 1) {
       // console.log('x less than one triggered!');
@@ -65,6 +67,7 @@ class Board {
     } else {
       xValues = [x - 1, x, x + 1];
     }
+    // console.log('xValues in the xValues function are: ', xValues);
     return xValues;
   }
 
@@ -103,8 +106,16 @@ class Board {
   populateBoard() {
     for (let i = 0; i < this.board.length; i += 1) {
       for (let j = 0; j < this.board.length; j += 1) {
-        this.board[i][j] = new Cell();
+        const cell = new Cell();
+        this.randomiseStatus(cell);
+        this.board[i][j] = cell;
       }
+    }
+  }
+
+  randomiseStatus(cell) {
+    if (Math.random() > 0.8) {
+      cell.live();
     }
   }
 }
