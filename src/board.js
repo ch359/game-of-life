@@ -33,26 +33,9 @@ class Board {
     // console.log('X and y are: ', x, y, 'respectively');
     const neighbours = [];
     // console.log('Line 31 neighbours is: ', neighbours);
-    let xValues;
-    let yValues;
+    const xValues = this.xValues();
+    const yValues = this.yValues();
     // console.log('switch x is: ', x);
-    if (x < 1) {
-      // console.log('x less than one triggered!');
-      xValues = [x, x + 1];
-      // console.log('case xvalues is: ', xValues);
-    } else if (x === this.board.length - 1) {
-      xValues = [x - 1, x];
-    } else {
-      xValues = [x - 1, x, x + 1];
-    }
-
-    if (y < 1) {
-      yValues = [y, y + 1];
-    } else if (y === this.board.length - 1) {
-      yValues = [y - 1, y];
-    } else {
-      yValues = [y - 1, y, y + 1];
-    }
     // console.log('x and y values are', xValues, yValues, 'respectively');
     for (let i = 0; i < xValues.length; i += 1) {
       for (let j = 0; j < yValues.length; j += 1) {
@@ -69,6 +52,32 @@ class Board {
       }
     }
     return neighbours;
+  }
+
+  xValues(x) {
+    let xValues;
+    if (x < 1) {
+      // console.log('x less than one triggered!');
+      xValues = [x, x + 1];
+      // console.log('case xvalues is: ', xValues);
+    } else if (x === this.board.length - 1) {
+      xValues = [x - 1, x];
+    } else {
+      xValues = [x - 1, x, x + 1];
+    }
+    return xValues;
+  }
+
+  yValues(y) {
+    let yValues;
+    if (y < 1) {
+      yValues = [y, y + 1];
+    } else if (y === this.board.length - 1) {
+      yValues = [y - 1, y];
+    } else {
+      yValues = [y - 1, y, y + 1];
+    }
+    return yValues;
   }
 
   allDead() {
@@ -102,4 +111,4 @@ class Board {
 
 module.exports = Board;
 
-//todo test for board edge cases
+// todo test for board edge cases
