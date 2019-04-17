@@ -8,14 +8,54 @@ class Game {
     this.canvasProperties = {
       width: 500,
       height: 500,
-      gridSize: 50,
+      gridSize: 20,
     };
     this.board = new Board(this.canvasProperties.width / this.canvasProperties.gridSize);
-    console.log(this.board.board);
+    debugger;
     this.drawInitialCanvas();
+    this.randomiseStatus();
     this.populateCells();
-    this.board.board[1][1].alive = true;
-    this.populateCells();
+    this.tick();
+    this.tick();
+    this.tick();
+    this.tick();
+    this.tick();
+    this.tick();
+    this.tick();
+    this.tick();
+    this.tick();
+    this.tick();
+    this.tick();
+    console.log('ticking finished');
+  }
+
+  tick() {
+    for (let i = 0; i < this.board.board.length; i += 1) {
+      for (let j = 0; j < this.board.board.length; j += 1) {
+        // console.log('i and j in tick are: ', i, j);
+        this.reproduce(i, j);
+        this.populateCells();
+      }
+    }
+  }
+
+  reproduce(x, y) {
+    const cell = this.board.getCell(x, y);
+    if (cell.isAlive() === false) {
+      if (this.board.shouldReproduce(x, y)) {
+        cell.live();
+      }
+    }
+  }
+
+  randomiseStatus() {
+    for (let i = 0; i < this.board.board.length; i += 1) {
+      for (let j = 0; j < this.board.board.length; j += 1) {
+        if (Math.random() > 0.8) {
+          this.board.getCell(i, j).live();
+        }
+      }
+    }
   }
 
   populateCells() {
@@ -40,6 +80,7 @@ class Game {
       this.ctx.fillStyle = 'white';
     }
     this.ctx.fillRect(x, y, this.canvasProperties.gridSize, this.canvasProperties.gridSize);
+    this.ctx.stroke();
   }
 
   drawInitialCanvas() {
@@ -68,3 +109,5 @@ class Game {
 (() => {
   let game = new Game();
 })();
+
+// todo refactor to improve performance
