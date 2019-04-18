@@ -8,15 +8,18 @@ class Game {
     this.canvasProperties = {
       width: 500,
       height: 500,
-      gridSize: 10,
+      gridSize: 50,
     };
     this.board = new Board(this.canvasProperties.width / this.canvasProperties.gridSize);
-    debugger;
+    // debugger;
     this.drawInitialCanvas();
+    console.log('drawn canvas');
     this.populateCells();
-    for (let i = 0; i < 10; i += 1) {
-      this.tick();
-    }
+    console.log('populated cells');
+    const boundTick = this.tick.bind(this);
+    setInterval(boundTick, 100);
+
+
     console.log('ticking finished');
   }
 
@@ -24,24 +27,37 @@ class Game {
     for (let i = 0; i < this.board.board.length; i += 1) {
       for (let j = 0; j < this.board.board.length; j += 1) {
         // console.log('i and j in tick are: ', i, j);
+        console.log('ticking');
         this.updateCell(i, j);
+
       }
     }
     this.ctx.stroke();
   }
 
   updateCell(x, y) {
-    this.reproduce(x, y);
+    const cell = this.board.getCell(x, y);
+    if (cell.isAlive() === true) {
+      this.die(x, y);
+    } else {
+      this.reproduce(x, y);
+    }
     const { gridSize } = this.canvasProperties;
     this.fillCell(x * gridSize, y * gridSize, this.board.getCell(x, y).isAlive());
+
   }
 
   reproduce(x, y) {
     const cell = this.board.getCell(x, y);
-    if (cell.isAlive() === false) {
-      if (this.board.shouldReproduce(x, y)) {
-        cell.live();
-      }
+    if (this.board.shouldReproduce(x, y) === true) {
+      cell.live();
+    }
+  }
+
+  die(x, y) {
+    const cell = this.board.getCell(x, y);
+    if (this.board.shouldDie(x, y) === true) {
+      cell.die();
     }
   }
 
@@ -58,6 +74,7 @@ class Game {
         }
       }
     }
+    this.ctx.stroke();
   }
 
   fillCell(x, y, bool) {

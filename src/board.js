@@ -18,6 +18,22 @@ class Board {
     return alive === 3;
   }
 
+  shouldDie(x, y) {
+    const neighbours = this.getNeighbours(x, y);
+    return this.populationDeath(x, y, neighbours) === true;
+  }
+
+  populationDeath(x, y, neighbours) {
+    let alive = 0;
+    for (let i = 0; i < neighbours.length; i += 1) {
+      if (neighbours[i].isAlive() === true) {
+        alive += 1;
+      }
+    }
+    return alive > 3 || alive < 2;
+
+  }
+
   getCell(x, y) {
     // console.log('Get cell - ---------------------');
     // console.log('I am the problematic board:', this.board);
