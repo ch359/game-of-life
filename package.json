@@ -20,5 +20,7 @@
     "jasmine-node": "^1.16.2",
     "parcel-bundler": "^1.12.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "npm": "^6.9.0"
+  }
 }

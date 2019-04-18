@@ -2,46 +2,48 @@ const Board = require('../src/board');
 
 class Game {
   constructor() {
-    console.log('Constructor has activated!');
-
     this.canvas = document.getElementById('gameCanvas');
     this.canvasProperties = {
-      width: 500,
-      height: 500,
+      width: 800,
+      height: 800,
       gridSize: 10,
     };
     this.board = new Board(this.canvasProperties.width / this.canvasProperties.gridSize);
-    debugger;
     this.drawInitialCanvas();
     this.populateCells();
-    for (let i = 0; i < 10; i += 1) {
-      this.tick();
-    }
-    console.log('ticking finished');
+    const boundTick = this.tick.bind(this);
+    setInterval(boundTick, 100);
   }
 
   tick() {
     for (let i = 0; i < this.board.board.length; i += 1) {
       for (let j = 0; j < this.board.board.length; j += 1) {
-        // console.log('i and j in tick are: ', i, j);
-        this.updateCell(i, j);
+        const cell = this.board.getCell(i, j);
+        this.updateCell(i, j, cell);
       }
     }
     this.ctx.stroke();
   }
 
-  updateCell(x, y) {
-    this.reproduce(x, y);
+  updateCell(x, y, cell) {
+    if (cell.isAlive() === true) {
+      this.die(x, y, cell);
+    } else {
+      this.reproduce(x, y, cell);
+    }
     const { gridSize } = this.canvasProperties;
     this.fillCell(x * gridSize, y * gridSize, this.board.getCell(x, y).isAlive());
   }
 
-  reproduce(x, y) {
-    const cell = this.board.getCell(x, y);
-    if (cell.isAlive() === false) {
-      if (this.board.shouldReproduce(x, y)) {
-        cell.live();
-      }
+  reproduce(x, y, cell) {
+    if (this.board.shouldReproduce(x, y) === true) {
+      cell.live();
+    }
+  }
+
+  die(x, y, cell) {
+    if (this.board.shouldDie(x, y) === true) {
+      cell.die();
     }
   }
 
@@ -58,6 +60,7 @@ class Game {
         }
       }
     }
+    this.ctx.stroke();
   }
 
   fillCell(x, y, bool) {
@@ -76,14 +79,14 @@ class Game {
 
       this.ctx = this.canvas.getContext('2d');
 
-      for (let x = 0.5; x < 501; x += this.canvasProperties.gridSize) {
+      for (let x = 0.5; x <= this.canvasProperties.width; x += this.canvasProperties.gridSize) {
         this.ctx.moveTo(x, 0);
-        this.ctx.lineTo(x, 501);
+        this.ctx.lineTo(x, this.canvasProperties.height);
       }
 
-      for (let y = 0.5; y < 501; y += this.canvasProperties.gridSize) {
+      for (let y = 0.5; y <= this.canvasProperties.height; y += this.canvasProperties.gridSize) {
         this.ctx.moveTo(0, y);
-        this.ctx.lineTo(501, y);
+        this.ctx.lineTo(this.canvasProperties.width, y);
       }
 
       this.ctx.strokeStyle = '#ddd';
@@ -95,5 +98,3 @@ class Game {
 (() => {
   let game = new Game();
 })();
-
-// todo refactor to improve performance

@@ -61,8 +61,27 @@ describe('Board', () => {
       expect(game.getNeighbours(1, 1)).not.toContain(subjectCell);
     });
 
-    xit('can return correct results for non-central pieces', () => {
+    it('can return correct results for edge pieces', () => {
+      game.board = [[subjectCell, cell2, cell3], [cell4, cell1, cell5], [cell6, cell7, cell8]];
+      expect(game.getNeighbours(0, 0)).toContain(cell2);
+      expect(game.getNeighbours(0, 0)).toContain(cell4);
+      expect(game.getNeighbours(0, 0)).toContain(cell1);
+      expect(game.getNeighbours(0, 0).length).toBe(3);
+    });
+  });
 
+  describe('#axisNeighbours', () => {
+    it('returns all neighbours on that axis when board size is at least 3', () => {
+      game.board = [[cell, cell, cell], [cell, subjectCell, cell], [cell, cell, cell]];
+      expect(game.axisNeighbours(1)).toEqual([0, 1, 2]);
+    });
+    it('does not return a neighbour if it would have a position less than 0 on the axis', () => {
+      game.board = [[subjectCell, cell], [cell, cell]];
+      expect(game.axisNeighbours(0)).toEqual([0, 1]);
+    });
+    it('does not return a neighbour if it would have a position greater than the board length', () => {
+      game.board = [[cell, cell, cell], [cell, cell, cell], [cell, cell, subjectCell]];
+      expect(game.axisNeighbours(2)).toEqual([1, 2]);
     });
   });
 
