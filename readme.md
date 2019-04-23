@@ -42,11 +42,7 @@ To lint: `npm run lint`
 
 #### Screenshots
 
-Screenshot:
-
-![game](docs/game.png)
-
-In motion:
+The game in motion:
 
 ![game](docs/game.gif)
 
