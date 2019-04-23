@@ -4,12 +4,12 @@ class Game {
   constructor() {
     this.canvas = document.getElementById('gameCanvas');
     this.canvasProperties = {
-      width: 800,
-      height: 800,
+      width: 500,
+      height: 500,
       gridSize: 10,
     };
     this.board = new Board(this.canvasProperties.width / this.canvasProperties.gridSize);
-    this.drawInitialCanvas();
+    this.setupInitialCanvas();
     this.populateCells();
     const boundTick = this.tick.bind(this);
     setInterval(boundTick, 100);
@@ -18,21 +18,20 @@ class Game {
   tick() {
     for (let i = 0; i < this.board.board.length; i += 1) {
       for (let j = 0; j < this.board.board.length; j += 1) {
-        const cell = this.board.getCell(i, j);
-        this.updateCell(i, j, cell);
+        this.updateCell(i, j, this.board.getCell(i, j));
       }
     }
     this.ctx.stroke();
   }
 
   updateCell(x, y, cell) {
-    if (cell.isAlive() === true) {
+    if (cell.isAlive()) {
       this.die(x, y, cell);
     } else {
       this.reproduce(x, y, cell);
     }
-    const { gridSize } = this.canvasProperties;
-    this.fillCell(x * gridSize, y * gridSize, this.board.getCell(x, y).isAlive());
+    this.fillCell(x * this.canvasProperties.gridSize, y * this.canvasProperties.gridSize,
+      this.board.getCell(x, y).isAlive());
   }
 
   reproduce(x, y, cell) {
@@ -52,19 +51,21 @@ class Game {
     for (let i = 0; i < gameBoard.length; i += 1) {
       for (let j = 0; j < gameBoard.length; j += 1) {
         const cell = gameBoard[i][j];
-        const { gridSize } = this.canvasProperties;
+
         if (cell.isAlive()) {
-          this.fillCell(i * gridSize, j * gridSize, true);
+          this.fillCell(i * this.canvasProperties.gridSize, j * this.canvasProperties.gridSize,
+            true);
         } else {
-          this.fillCell(i * gridSize, j * gridSize, false);
+          this.fillCell(i * this.canvasProperties.gridSize, j * this.canvasProperties.gridSize,
+            false);
         }
       }
     }
     this.ctx.stroke();
   }
 
-  fillCell(x, y, bool) {
-    if (bool === true) {
+  fillCell(x, y, alive) {
+    if (alive) {
       this.ctx.fillStyle = 'red';
     } else {
       this.ctx.fillStyle = 'white';
@@ -72,26 +73,42 @@ class Game {
     this.ctx.fillRect(x, y, this.canvasProperties.gridSize, this.canvasProperties.gridSize);
   }
 
-  drawInitialCanvas() {
+  setupInitialCanvas() {
     if (this.canvas.getContext) {
-      this.canvas.width = this.canvasProperties.width;
-      this.canvas.height = this.canvasProperties.height;
+      this.createCanvas();
 
-      this.ctx = this.canvas.getContext('2d');
+      this.drawVerticalGridlines(this.canvas.width, this.canvas.height,
+        this.canvasProperties.gridSize);
+      this.drawHorizontalGridlines(this.canvas.width, this.canvas.height,
+        this.canvasProperties.gridSize);
 
-      for (let x = 0.5; x <= this.canvasProperties.width; x += this.canvasProperties.gridSize) {
-        this.ctx.moveTo(x, 0);
-        this.ctx.lineTo(x, this.canvasProperties.height);
-      }
-
-      for (let y = 0.5; y <= this.canvasProperties.height; y += this.canvasProperties.gridSize) {
-        this.ctx.moveTo(0, y);
-        this.ctx.lineTo(this.canvasProperties.width, y);
-      }
-
-      this.ctx.strokeStyle = '#ddd';
-      this.ctx.stroke();
+      this.paintLines();
     }
+  }
+
+  drawVerticalGridlines(width, height, gridSize) {
+    for (let x = 0.5; x <= width; x += gridSize) {
+      this.ctx.moveTo(x, 0);
+      this.ctx.lineTo(x, height);
+    }
+  }
+
+  drawHorizontalGridlines(width, height, gridSize) {
+    for (let y = 0.5; y <= height; y += gridSize) {
+      this.ctx.moveTo(0, y);
+      this.ctx.lineTo(width, y);
+    }
+  }
+
+  paintLines() {
+    this.ctx.strokeStyle = '#ddd';
+    this.ctx.stroke();
+  }
+
+  createCanvas() {
+    this.canvas.width = this.canvasProperties.width;
+    this.canvas.height = this.canvasProperties.height;
+    this.ctx = this.canvas.getContext('2d');
   }
 }
 

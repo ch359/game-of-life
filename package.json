@@ -17,7 +17,7 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jasmine": "^2.10.1",
     "jasmine": "^3.4.0",
-    "jasmine-node": "^1.16.2",
+    "jasmine-node": "^2.0.1",
     "parcel-bundler": "^1.12.3"
   },
   "dependencies": {
