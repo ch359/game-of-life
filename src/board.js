@@ -19,10 +19,10 @@ class Board {
 
   shouldDie(x, y) {
     const neighbours = this.getNeighbours(x, y);
-    return this.populationDeath(x, y, neighbours) === true;
+    return Board.populationDeath(x, y, neighbours) === true;
   }
 
-  populationDeath(x, y, neighbours) {
+  static populationDeath(x, y, neighbours) {
     let alive = 0;
     for (let i = 0; i < neighbours.length; i += 1) {
       if (neighbours[i].isAlive() === true) {
@@ -86,13 +86,13 @@ class Board {
     for (let i = 0; i < this.board.length; i += 1) {
       for (let j = 0; j < this.board.length; j += 1) {
         const cell = new Cell();
-        this.randomiseStatus(cell);
+        Board.randomiseStatus(cell);
         this.board[i][j] = cell;
       }
     }
   }
 
-  randomiseStatus(cell) {
+  static randomiseStatus(cell) {
     if (Math.random() > 0.8) {
       cell.live();
     }
@@ -100,5 +100,3 @@ class Board {
 }
 
 module.exports = Board;
-
-// todo test for board edge cases

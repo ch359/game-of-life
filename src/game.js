@@ -10,7 +10,7 @@ class Game {
     };
     this.board = new Board(this.canvasProperties.width / this.canvasProperties.gridSize);
     this.setupInitialCanvas();
-    this.populateCells();
+
     const boundTick = this.tick.bind(this);
     setInterval(boundTick, 100);
   }
@@ -44,24 +44,6 @@ class Game {
     if (this.board.shouldDie(x, y) === true) {
       cell.die();
     }
-  }
-
-  populateCells() {
-    const gameBoard = this.board.board;
-    for (let i = 0; i < gameBoard.length; i += 1) {
-      for (let j = 0; j < gameBoard.length; j += 1) {
-        const cell = gameBoard[i][j];
-
-        if (cell.isAlive()) {
-          this.fillCell(i * this.canvasProperties.gridSize, j * this.canvasProperties.gridSize,
-            true);
-        } else {
-          this.fillCell(i * this.canvasProperties.gridSize, j * this.canvasProperties.gridSize,
-            false);
-        }
-      }
-    }
-    this.ctx.stroke();
   }
 
   fillCell(x, y, alive) {
@@ -113,5 +95,5 @@ class Game {
 }
 
 (() => {
-  let game = new Game();
+  const game = new Game(); // eslint-disable-line no-unused-vars
 })();
