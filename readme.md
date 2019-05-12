@@ -5,6 +5,8 @@
 As a fun project post-Makers, I wanted to brush up my JavaScript and explore something new and widely applicable, so I looked to HTML5 canvas for inspiration. I chose Game of Life as it's fun, combines visuals with logic and can be deceptively complex.
 This is based on [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
 
+In a nutshell, it simulates a small ecosystem, where each cell can be either alive or dead. Cells can join with other cells to procreate, however if too many cells are present in an area, they may die of starvation, simulating overpopulation. Applying a set of behavioural rules to cell behaviour therefore creates a dynamic and ever-changing ecosystem.
+
 #### Learning objectives
 
 - Improve JavaScript knowledge
